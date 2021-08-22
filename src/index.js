@@ -1,10 +1,11 @@
 const dialogflow = require('@google-cloud/dialogflow');
 require('dotenv').config();
+const fs = require('fs');
 const express = require('express');
 
 const PORT = process.env.PORT || 5000;
 
-const CREDENTIALS = JSON.parse(process.env.CREDENTIALS);
+const CREDENTIALS = JSON.parse(fs.readFileSync('pwd-fqbk-4e57f6e875d4.json'));
 
 const PROJECID = CREDENTIALS.project_id;
 
@@ -49,7 +50,9 @@ server.use(express.urlencoded({
 server.use(express.json());
 
 server.get('/', (req, res) => {
-    res.json(`Test API to study the use of dialogflow`);
+    res.json({
+        message : `Test API to study the use of dialogflow`
+    });
 })
 
 server.post('/dialogflow', async (req, res) => {
