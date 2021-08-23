@@ -2,6 +2,7 @@ const dialogflow = require('@google-cloud/dialogflow');
 require('dotenv').config();
 const fs = require('fs');
 const express = require('express');
+const uuid = require('uuid');
 
 const PORT = process.env.PORT || 5000;
 
@@ -57,9 +58,10 @@ server.get('/', (req, res) => {
 
 server.post('/dialogflow', async (req, res) => {
 
+    const sessionId = uuid.v4();
+
     let languageCode = req.body.languageCode;
     let queryText = req.body.queryText;
-    let sessionId = req.body.sessionId;
 
     let responseData = await detectIntent(languageCode, queryText, sessionId);
 
