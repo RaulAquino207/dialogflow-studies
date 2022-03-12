@@ -1,19 +1,16 @@
 const dialogflow = require('@google-cloud/dialogflow');
 require('dotenv').config();
-const fs = require('fs');
 const express = require('express');
 const uuid = require('uuid');
 
 const PORT = process.env.PORT || 5000;
 
-const CREDENTIALS = JSON.parse(fs.readFileSync('pwd-fqbk-4e57f6e875d4.json'));
-
-const PROJECID = CREDENTIALS.project_id;
+const PROJECID = process.env.PROJECT_ID_LSC_AGENT;
 
 const CONFIGURATION = {
     credentials: {
-        private_key: CREDENTIALS['private_key'],
-        client_email: CREDENTIALS['client_email']
+        private_key: process.env.PRIVATE_KEY_LSC_AGENT,
+        client_email: process.env.CLIENT_EMAIL_LSC_AGENT
     }
 }
 
@@ -34,9 +31,9 @@ const detectIntent = async (languageCode, queryText, sessionId) => {
     };
 
     const responses = await sessionClient.detectIntent(request);
-    console.log(responses);
+    // console.log(responses);
     const result = responses[0].queryResult;
-    console.log(result);
+    // console.log(result);
 
     return {
         response: result.fulfillmentText
